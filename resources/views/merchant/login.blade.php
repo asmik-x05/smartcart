@@ -19,12 +19,10 @@
                                 placeholder="name@company.com" required>
                         </div>
 
-                        <div>
-                            <label for="password" class="block mb-2 text-sm font-medium ">Password</label>
-                            <input type="password" name="password" id="password"
-                                class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
-                                placeholder="Enter your password" required>
-                        </div>
+                        <x-utils.password-input name="password" label="Password" placeholder="Enter your password"
+                            id="password" />
+                        <div class="text-end"> <a href="{{ route('merchant.forgot-password.view') }}"
+                                class="font-medium hover:underline text-primary ">Forgot password?</a></div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
                                 <input id="terms" aria-describedby="terms" type="checkbox"

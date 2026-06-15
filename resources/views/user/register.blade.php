@@ -17,7 +17,7 @@
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium ">Your name <span
                                     class="text-red-500">*</span></label>
-                            <input type="text" name="name" id="name"
+                            <input type="text" name="name" id="name" value="{{ old('name') }}"
                                 class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
                                 placeholder="Enter your name" required>
                         </div>
@@ -25,24 +25,14 @@
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium ">Your email <span
                                     class="text-red-500">*</span></label>
-                            <input type="email" name="email" id="email"
+                            <input type="email" name="email" id="email" value="{{ old('email') }}"
                                 class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
                                 placeholder="name@company.com" required>
                         </div>
-                        <div>
-                            <label for="password" class="block mb-2 text-sm font-medium ">Password <span
-                                    class="text-red-500">*</span></label>
-                            <input type="password" name="password" id="password"
-                                class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
-                                placeholder="Enter your password" required>
-                        </div>
-                        <div>
-                            <label for="password_confirmation" class="block mb-2 text-sm font-medium ">Confirm Password <span
-                                    class="text-red-500">*</span></label>
-                            <input type="password" name="password_confirmation" id="password_confirmation"
-                                class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
-                                placeholder="Confirm your password" required>
-                        </div>
+                        <x-utils.password-input name="password" label="Password" placeholder="Enter your password"
+                            id="password" />
+                        <x-utils.password-input name="password_confirmation" label="Confirm Password"
+                            placeholder="Confirm your password" id="password_confirmation" />
 
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
