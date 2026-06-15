@@ -6,7 +6,7 @@
         </a>
 
 
-        <div class="flex items-center gap-6">
+        <div class="hidden md:flex items-center gap-6">
             <a href="{{ route('home') }}" class="text-text hover:text-link-hover">Home</a>
             <a href="{{ route('shop') }}" class="text-text hover:text-link-hover">Shop</a>
             <a href="{{ route('categories') }}" class="text-text hover:text-link-hover">Categories</a>
@@ -23,7 +23,7 @@
             </button>
 
             <x-theme.toggle-theme />
-            <a href="{{ route('user.login') }}" class="text-text hover:text-link-hover">Login</a>
+            <x-user.user-avatar />
         </div>
     </nav>
 </header>

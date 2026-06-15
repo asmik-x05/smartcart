@@ -33,9 +33,19 @@ class PageController extends Controller
         return view('user.login');
     }
 
-     public function register()
+    public function register()
     {
         return view('user.register');
+    }
+
+    public function forgot_password()
+    {
+        return view('user.forgot-password');
+    }
+
+    public function reset_password()
+    {
+        return view('user.reset-password');
     }
 
     public function subscribe_newsletter(Request $req)

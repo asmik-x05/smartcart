@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Merchant extends Model
+class Merchant extends Authenticatable
 {
     public function products()
     {
         return $this->hasMany(Product::class);
     }
 
-     public function carts()
+    public function carts()
     {
         return $this->hasMany(Cart::class);
     }

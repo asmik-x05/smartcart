@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Merchant;
 use App\Models\User;
 
 return [
@@ -42,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'merchant' => [
+            'driver' => 'session',
+            'provider' => 'merchants',
+        ],
     ],
 
     /*
@@ -65,6 +70,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+        'merchants' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MERCHANT_MODEL', Merchant::class),
         ],
 
         // 'users' => [

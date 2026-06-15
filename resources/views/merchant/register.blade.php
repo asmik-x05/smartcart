@@ -5,19 +5,6 @@
                 <img class="w-8 h-8 mr-2" src="/images/logo/logo.png" alt="logo">
                 {{ config('app.name', 'SmartCart') }}
             </a>
-            @if (session('success'))
-                <div
-                    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-surface text-text">
-                    <h3 class="text-2xl font-bold mb-4"><i
-                            class="ri-check-line bg-green-800 text-green-300 p-2 rounded-full"></i>
-                    </h3>
-                    <p>Your submission has been received successfully. </p>
-                    <p>We will review it and get back to you shortly.</p>
-                    <a href="{{ route('home') }}" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">Go
-                        to
-                        Home</a>
-                </div>
-            @endif
             @if (!config('app.merchant_registration_enabled'))
                 <div class="w-full  rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0  border border-border bg-surface">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -28,6 +15,18 @@
                             We are not accepting new merchant registrations at this time. Please check back later.
                         </p>
                     </div>
+                </div>
+            @elseif (session('success'))
+                <div
+                    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 bg-surface text-text">
+                    <h3 class="text-2xl font-bold mb-4"><i
+                            class="ri-check-line bg-green-800 text-green-300 p-2 rounded-full"></i>
+                    </h3>
+                    <p>Your submission has been received successfully. </p>
+                    <p>We will review it and get back to you shortly.</p>
+                    <a href="{{ route('home') }}" class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">Go
+                        to
+                        Home</a>
                 </div>
             @else
                 <div class="w-full  rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0 border border-border">
