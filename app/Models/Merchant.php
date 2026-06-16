@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Merchant extends Authenticatable
+class Merchant extends Authenticatable implements CanResetPassword
 {
     public function products()
     {
