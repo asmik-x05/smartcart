@@ -1,12 +1,10 @@
 <x-layout>
     <section class="bg-surface text-text">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">            
             <a href="#" class="flex items-center mb-6 text-2xl font-semibold ">
                 <img class="w-8 h-8 mr-2" src="/images/logo/logo.png" alt="logo">
                 {{ config('app.name', 'SmartCart') }}
             </a>
-
-
             <div class="w-full  rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0 border border-border">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
@@ -14,9 +12,11 @@
                     </h1>
                     <form class="space-y-4 md:space-y-6" action="{{ route('user.reset-password') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="email" value="{{ $email }}">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium ">Your email </label>
-                            <input type="email" name="email" id="email" value="" disabled
+                            <input type="email" name="email" id="email" value="{{ $email }}" disabled
                                 class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
                                 placeholder="name@company.com" required>
                         </div>
@@ -32,7 +32,7 @@
                     </form>
                 </div>
             </div>
-
+            
         </div>
     </section>
 </x-layout>

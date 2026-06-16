@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Password as PasswordFacade;
+
 use Laravel\Socialite\Socialite;
 
 
@@ -88,14 +92,65 @@ class AuthController extends Controller
 
     public function forgotPassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+        if ($validator->fails()) {
+            toast($validator->errors()->first(), 'error');
+            return back()->withErrors($validator);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            toast('if User exists, Password reset link has been sent. ', 'success');
+            return back()->withErrors(['email' => 'No account found with that email.']);
+        }
+
+        $token = PasswordFacade::createToken($user);
+
+        $resetUrl = url("/reset-password/{$token}?email={$user->email}");
+
+        Mail::to($request->email)->send(new ResetPassword($resetUrl, $user->name));
+
         toast('Password reset link has been sent to your email.', 'success');
 
         return redirect()
             ->route('user.forgot-password.view')
             ->with('success', 'Password reset link has been sent to your email.');
     }
+
     public function resetPassword(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            "token" => 'required',
+            "email" => 'required|email|exists:users,email',
+            "password" => [
+                'required',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols()
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            toast($validator->errors()->first(), 'error');
+            return back()->withErrors($validator)->onlyInput('email');
+        }
+
+        $status = PasswordFacade::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->password = bcrypt($password);
+                $user->save();
+            }
+        );
+
+
+        if ($status !== PasswordFacade::PASSWORD_RESET) {
+            toast(__($status), 'error');
+            return back()->withErrors(['email' => 'Failed to reset password. Please try again.']);
+        }
+
         toast('Password has been reset successfully.', 'success');
 
         return redirect()

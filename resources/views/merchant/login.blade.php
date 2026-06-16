@@ -14,7 +14,7 @@
                         @csrf
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium ">Your email</label>
-                            <input type="email" name="email" id="email"
+                            <input type="email" name="email" id="email" value="{{ old('email') }}"
                                 class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
                                 placeholder="name@company.com" required>
                         </div>

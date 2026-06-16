@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique(); 
             $table->string('password')->nullable(true);
-            $table->string('contact_no');
+            $table->string('contact_no')->unique();
             $table->text('message');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->rememberToken();

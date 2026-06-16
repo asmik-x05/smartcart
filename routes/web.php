@@ -38,13 +38,13 @@ Route::middleware(['guest-only'])->group(function () {
 
     // Forgot and reset password routes for users
     Route::get('/forgot-password', [PageController::class, 'forgot_password'])->name('user.forgot-password.view');
-    Route::get('/reset-password', [PageController::class, 'reset_password'])->name('user.reset-password.view');
+    Route::get('/reset-password/{token}', [PageController::class, 'reset_password'])->name('user.reset-password.view');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('user.forgot-password');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('user.reset-password');
 
     // Forgot and reset password routes for merchants
     Route::get('/merchant/forgot-password', [MerchantController::class, 'forgot_password'])->name('merchant.forgot-password.view');
-    Route::get('/merchant/reset-password', [MerchantController::class, 'reset_password'])->name('merchant.reset-password.view');
+    Route::get('/merchant/reset-password/{token}', [MerchantController::class, 'reset_password'])->name('merchant.reset-password.view');
     Route::post('/merchant/forgot-password', [MerchantAuthController::class, 'forgotPassword'])->name('merchant.forgot-password');
     Route::post('/merchant/reset-password', [MerchantAuthController::class, 'resetPassword'])->name('merchant.reset-password');
 });
@@ -54,6 +54,10 @@ Route::middleware(['authenticated'])->group(function () {
     // logout routes
     Route::delete('/logout', [AuthController::class, 'logout'])->name('user.logout');
     Route::delete('/merchant/logout', [MerchantAuthController::class, 'logout'])->name('merchant.logout');
+});
+
+Route::get('/test',function(){
+    return view('mail.reset-password');
 });
 
 

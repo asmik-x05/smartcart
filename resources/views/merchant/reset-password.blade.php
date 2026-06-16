@@ -14,9 +14,11 @@
                     </h1>
                     <form class="space-y-4 md:space-y-6" action="{{ route('merchant.reset-password') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="email" value="{{ $email }}">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium ">Your email </label>
-                            <input type="email" name="email" id="email" value="" disabled
+                            <input type="email" name="email" id="email" value="{{ $email }}" disabled
                                 class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
                                 placeholder="name@company.com" required>
                         </div>

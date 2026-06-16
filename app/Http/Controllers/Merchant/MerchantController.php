@@ -29,9 +29,13 @@ class MerchantController extends Controller
         return view('merchant.forgot-password');
     }
 
-    public function reset_password()
+    public function reset_password(Request $request, $token)
     {
-        return view('merchant.reset-password');
+        abort_if(!$request->query('email'), 400, 'Invalid reset link.');
+
+        $email = $request->query('email');
+
+        return view('merchant.reset-password', compact('email', 'token'));
     }
 
 }

@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MerchantRegistrationRequest;
+use App\Mail\ResetPassword;
+use App\Models\Admin;
 use App\Models\Merchant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Password as PasswordFacade;
 
 class MerchantAuthController extends Controller
 {
@@ -36,6 +42,12 @@ class MerchantAuthController extends Controller
         $merchant->message = $req->message;
 
         $merchant->save();
+
+        $admins = Admin::all();
+
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new MerchantRegistrationRequest($merchant));
+        }
 
         toast('Your Form has been submitted!', 'success');
 
@@ -81,6 +93,27 @@ class MerchantAuthController extends Controller
 
     public function forgotPassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:merchants,email',
+        ]);
+
+        if ($validator->fails()) {
+            toast($validator->errors()->first(), 'error');
+            return back()->withErrors($validator);
+        }
+
+        $merchant = Merchant::where('email', $request->email)->first();
+
+        if (!$merchant) {
+            toast('if merchant exists, Password reset link has been sent. ', 'success');
+            return back()->withErrors(['email' => 'No account found with that email.']);
+        }
+
+        $token = PasswordFacade::broker('merchants')->createToken($merchant);
+
+        $resetUrl = url("/merchant/reset-password/{$token}?email={$merchant->email}");
+
+        Mail::to($request->email)->send(new ResetPassword($resetUrl, $merchant->name));
         toast('Password reset link has been sent to your email.', 'success');
 
         return redirect()
@@ -89,6 +122,33 @@ class MerchantAuthController extends Controller
     }
     public function resetPassword(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            "token" => 'required',
+            "email" => 'required|email|exists:merchants,email',
+            "password" => [
+                'required',
+                'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols()
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            toast($validator->errors()->first(), 'error');
+            return back()->withErrors($validator)->onlyInput('email');
+        }
+        $status = PasswordFacade::broker('merchants')->reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->password = bcrypt($password);
+                $user->save();
+            }
+        );
+
+        if ($status !== PasswordFacade::PASSWORD_RESET) {
+            toast(__($status), 'error');
+            return back()->withErrors(['email' => 'Failed to reset password. Please try again.']);
+        }
+
         toast('Password has been reset successfully.', 'success');
 
         return redirect()
