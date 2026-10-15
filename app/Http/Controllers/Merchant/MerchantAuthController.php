@@ -23,6 +23,7 @@ class MerchantAuthController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required',
+            'store_name' => 'required',
             'email' => 'required|email|unique:merchants,email',
             'contact_no' => 'required|numeric|digits:10',
             'message' => 'required',
@@ -37,6 +38,7 @@ class MerchantAuthController extends Controller
 
         $merchant = new Merchant();
         $merchant->name = $req->name;
+        $merchant->store_name = $req->store_name;
         $merchant->email = $req->email;
         $merchant->contact_no = $req->contact_no;
         $merchant->message = $req->message;
@@ -151,8 +153,7 @@ class MerchantAuthController extends Controller
 
         toast('Password has been reset successfully.', 'success');
 
-        return redirect()
-            ->route('merchant.login')
+        return redirect('/merchant/login')
             ->with('success', 'Password has been reset successfully.');
 
     }

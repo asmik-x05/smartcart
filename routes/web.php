@@ -23,8 +23,8 @@ Route::middleware(['guest-only'])->group(function () {
     // Merchant Routes
     Route::get('/merchant/register', [MerchantController::class, 'register'])->name('merchant.register');
     Route::post('/merchant/register/store', [MerchantAuthController::class, 'register'])->name('merchant.register.store');
-    Route::get('/merchant/login', [MerchantController::class, 'login'])->name('merchant.login');
-    Route::post('/merchant/login', [MerchantAuthController::class, 'login'])->name('merchant.login.store');
+    // Route::get('/merchant/login', [MerchantController::class, 'login'])->name('merchant.login');
+    // Route::post('/merchant/login', [MerchantAuthController::class, 'login'])->name('merchant.login.store');
 
     // User Auth Routes
     Route::get('/login', [PageController::class, 'login'])->name('user.login');
@@ -53,11 +53,8 @@ Route::middleware(['authenticated'])->group(function () {
 
     // logout routes
     Route::delete('/logout', [AuthController::class, 'logout'])->name('user.logout');
-    Route::delete('/merchant/logout', [MerchantAuthController::class, 'logout'])->name('merchant.logout');
+    // Route::delete('/merchant/logout', [MerchantAuthController::class, 'logout'])->name('merchant.logout');
 });
 
-Route::get('/test',function(){
-    return view('mail.reset-password');
-});
 
 

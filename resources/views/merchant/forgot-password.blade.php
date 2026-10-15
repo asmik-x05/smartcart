@@ -13,7 +13,7 @@
                                 class="ri-check-line bg-green-800 text-green-300 p-2 rounded-full"></i>
                         </h3>
                         <p>Password reset link has been sent to your email.</p>
-                        <a href="{{ route('merchant.login') }}"
+                        <a href="{{ url('/merchant/login') }} "
                             class="mt-4 inline-block bg-primary text-white px-4 py-2 rounded">Go
                             to
                             Login</a>
@@ -36,7 +36,7 @@
                             </div>
 
 
-                            <div class="text-end"> <a href="{{ route('merchant.login') }}"
+                            <div class="text-end"> <a href="{{ url('/merchant/login') }}"
                                     class="font-medium hover:underline text-primary ">Back to Login</a></div>
 
                             <button type="submit"

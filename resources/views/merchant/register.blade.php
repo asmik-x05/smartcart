@@ -46,6 +46,14 @@
                             </div>
 
                             <div>
+                                <label for="store_name" class="block mb-2 text-sm font-medium ">Store Name <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" name="store_name" id="store_name"
+                                    class=" border-border border-0 border-b-2  focus:border-primary outline-none transition-colors duration-200  text-sm rounded-lg block w-full p-2.5  placeholder-text-muted"
+                                    placeholder="Enter your store name" required>
+                            </div>
+
+                            <div>
                                 <label for="email" class="block mb-2 text-sm font-medium ">Your email <span
                                         class="text-red-500">*</span></label>
                                 <input type="email" name="email" id="email"
@@ -82,7 +90,7 @@
                                 class="w-full  font-medium rounded-lg text-gray-100 text-sm px-5 py-2.5 text-center bg-primary cursor-pointer ">Request
                                 Registration</button>
                             <p class="text-sm font-light ">
-                                Already have an account? <a href="{{ route('merchant.login') }}"
+                                Already have an account? <a href="{{ url('/merchant/login') }}"
                                     class="font-medium  hover:underline ">Login
                                     here</a>
                             </p>

@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
+
 
 class Merchant extends Authenticatable implements CanResetPassword
 {
+    use CanResetPasswordTrait;
     public function products()
     {
         return $this->hasMany(Product::class);

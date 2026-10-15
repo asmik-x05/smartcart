@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $cast = [
+    protected $casts = [
         'price' => 'decimal:2',
         "images" => "array"
     ];
